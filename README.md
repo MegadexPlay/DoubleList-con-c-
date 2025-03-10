@@ -10,5 +10,8 @@ se recomienda compilar el programa directamente desde un ide de programacion com
 
 link de descarga de minGW: https://sourceforge.net/projects/mingw/
 
+# ejecucion
+para la correcta ejecucion del archivo es necesario que tanto el archivo .cpp y el archivo .exe se encuentren en la misma carpeta ya con el compilador configurado en el ide basta con presionar el boton de ejecucion para mostrar la prueba del programa
+
 # autores
 trabajado por: Oscar Gomez y David Marquez del curso de programacion 3 de la UPTC
