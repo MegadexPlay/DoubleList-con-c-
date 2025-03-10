@@ -144,8 +144,14 @@ public:
         }
     }
 
-    bool exist(const T& object){
-        return head != nullptr;
+    bool exist(const T& data){
+        Node<T>* auxNode = head; 
+        bool exist = false;
+        while (auxNode != nullptr && !exist) { 
+            exist = (auxNode->getData() == data);
+            auxNode = auxNode->getNext();
+        }
+    return exist;
     }
 
     int length() {
