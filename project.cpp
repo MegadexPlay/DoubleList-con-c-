@@ -35,6 +35,15 @@ public:
     }
 };
 
+template <typename T>
+class DoubleIterator{
+    public:
+    virtual bool hasNext() = 0;
+    virtual bool hasPrev() = 0;
+    virtual T next() = 0;
+    virtual T prev() = 0;
+};
+
 // Clase genérica para la lista doblemente enlazada
 template <typename T>
 class DoubleList {
@@ -115,7 +124,6 @@ public:
         return val;
     }
 
-sta
     void display() {
         if (isEmpty()) {
             cout << "La lista está vacía.\n";
@@ -136,10 +144,61 @@ sta
         }
     }
 
+    bool exist(const T& object){
+        return head != nullptr;
+    }
+
+    int length() {
+        int count = 0;
+        Node<T>* current = head;
+        while (current != nullptr) {
+            count++;
+            current = current->getNext();
+        }
+    return count;
+    }
+
+    auto doubleIterator(){
+        class DoubleIterator {
+            private:
+                Node<T>* nextAuxNode;
+                Node<T>* prevAuxNode;
+    
+            public:
+                DoubleIterator(Node<T>* head, Node<T>* tail)
+                    : nextAuxNode(head), prevAuxNode(tail) {}
+    
+                bool hasNext() {
+                    return nextAuxNode != nullptr;
+                }
+    
+                bool hasPrev() {
+                    return prevAuxNode != nullptr;
+                }
+    
+                T next() {
+                    if (!hasNext()) throw std::out_of_range("No more elements forward.");
+                    T data = nextAuxNode->getData();
+                    nextAuxNode = nextAuxNode->getNext();
+                    return data;
+                }
+    
+                T prev() {
+                    if (!hasPrev()) throw std::out_of_range("No more elements backward.");
+                    T data = prevAuxNode->getData();
+                    prevAuxNode = prevAuxNode->getPrev();
+                    return data;
+                }
+            };
+    
+            return DoubleIterator(head, tail); // Retornamos una instancia del iterador
+    }
+};
+    
+
 int main() {
 
     DoubleList<int> list;
-
   
     list.push(10);
     list.push(20);
@@ -160,5 +219,18 @@ int main() {
 
     cout << "¿La lista está vacía? " << (list.isEmpty() ? "Sí" : "No") << endl;
 
+    auto iterator = list.doubleIterator();
+    cout << "impresion de elementos de la lista usando el iterador desde delante" << endl;
+    while (iterator.hasNext())
+    {
+        cout << iterator.next() << endl; 
+    }
+
+    cout << "impresion de elementos de la lista usando el iterador desde atras" << endl;
+    while (iterator.hasPrev())
+    {
+        cout << iterator.prev() << endl; 
+    }
+    
     return 0;
 }
